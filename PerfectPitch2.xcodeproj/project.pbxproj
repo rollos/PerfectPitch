@@ -26,6 +26,7 @@
 		17D379EA201BE30C00A97A35 /* F2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 17D379DE201BE30C00A97A35 /* F2.wav */; };
 		17D379EB201BE30C00A97A35 /* D#2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 17D379DF201BE30C00A97A35 /* D#2.wav */; };
 		17D379EC201BE30C00A97A35 /* B2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 17D379E0201BE30C00A97A35 /* B2.wav */; };
+		17D379EE201BF41600A97A35 /* IntervalExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D379ED201BF41600A97A35 /* IntervalExample.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		17D379DE201BE30C00A97A35 /* F2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = F2.wav; sourceTree = "<group>"; };
 		17D379DF201BE30C00A97A35 /* D#2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "D#2.wav"; sourceTree = "<group>"; };
 		17D379E0201BE30C00A97A35 /* B2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = B2.wav; sourceTree = "<group>"; };
+		17D379ED201BF41600A97A35 /* IntervalExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalExample.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				17D379D0201AAAEE00A97A35 /* Session.swift */,
+				17D379ED201BF41600A97A35 /* IntervalExample.swift */,
 				17D379D2201AAE4600A97A35 /* SessionBank.swift */,
 			);
 			path = Model;
@@ -230,6 +233,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17D379EE201BF41600A97A35 /* IntervalExample.swift in Sources */,
 				17D379D3201AAE4600A97A35 /* SessionBank.swift in Sources */,
 				170BE2AA201A78FE0061DD80 /* ViewController.swift in Sources */,
 				170BE2A8201A78FE0061DD80 /* AppDelegate.swift in Sources */,
