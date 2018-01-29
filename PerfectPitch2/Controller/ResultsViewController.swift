@@ -2,16 +2,31 @@
 //  ResultsViewController.swift
 //  PerfectPitch2
 //
-//  Created by Woodrow Melling on 1/28/18.
+//  Created by Woodrow Melling on 1/29/18.
 //  Copyright © 2018 Woodrow Melling. All rights reserved.
 //
 
 import UIKit
 
-class ResultsViewController: UIViewController {
-
+class ResultsViewController: UIViewController, UITableViewDataSource {
+    
+    
+    
+    
+    
+    var scoreData:String = ""
+    var resultDict:[String:ResultsData] = [:]
+    var availableNotes:[String] = []
+    
+    
+    @IBOutlet weak var resultsDisplayLabel: UILabel!
+    
+    @IBOutlet weak var resultsTable: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        resultsDisplayLabel.text = scoreData
+        
 
         // Do any additional setup after loading the view.
     }
@@ -21,7 +36,29 @@ class ResultsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return availableNotes.count
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PlainCell", for: indexPath)
+        
+        let note = availableNotes[indexPath.row]
+        
+        
+        cell.textLabel?.text = note
+        
+        let score = "\(resultDict[note]!.correctCount)/\(resultDict[note]!.playCount)"
+        
+        cell.detailTextLabel?.text = score
+        
+        return cell
+        
+    }
+    
+    
     /*
     // MARK: - Navigation
 

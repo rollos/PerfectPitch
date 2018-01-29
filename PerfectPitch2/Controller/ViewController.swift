@@ -10,6 +10,9 @@ import UIKit
 import AVFoundation
 
 
+
+
+
 class ViewController: UIViewController {
 
     
@@ -43,6 +46,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var progressView: UIView!
     
     
+    var resultsDict:[String:ResultsData] = [:]
+    
+
+    
     // Audio player
     var player: AVAudioPlayer?
     
@@ -69,7 +76,12 @@ class ViewController: UIViewController {
         
         //enable the active notes for this session
         updateUI()
+        
         playQuestion()
+        
+        for note in session.notes {
+            resultsDict[note] = ResultsData()
+        }
         
     }
 
@@ -87,10 +99,14 @@ class ViewController: UIViewController {
         
         // If the user got the right answer
         if notePressed == session.questions[questionNumber] {
+            resultsDict[session.questions[questionNumber]]?.playCount += 1
+            
+            
             // if it was on the first try, increase the score
             if firstTry {
                 score += 1
                 scoreLabel.text = "Score: \(score)"
+                resultsDict[session.questions[questionNumber]]!.correctCount += 1
             }
             resultLabel.text = "Correct! That note was a \(session.questions[questionNumber])"
             skipButton.setTitle("Next", for: .normal)
@@ -106,7 +122,8 @@ class ViewController: UIViewController {
     @IBAction func skipButton(_ sender: UIButton) {
         questionNumber += 1
         if questionNumber >= session.questions.count {
-            restartSession()
+            //restartSession()
+            performSegue(withIdentifier: "ResultsSegue", sender: self)
             return
         }
         firstTry = true
@@ -220,7 +237,15 @@ class ViewController: UIViewController {
         return self.view.viewWithTag(noteTags[note]!) as! UIButton
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destVC : ResultsViewController = segue.destination as! ResultsViewController
+        
+        destVC.scoreData = "Score: \(score)/\(session.questions.count)"
+        destVC.resultDict = resultsDict
+        destVC.availableNotes = session.notes
+    }
     
+  
     
 
 
