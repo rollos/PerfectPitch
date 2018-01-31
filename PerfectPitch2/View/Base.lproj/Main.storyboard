@@ -371,7 +371,7 @@
                         <outlet property="resultLabel" destination="BGc-3h-Fuq" id="kN4-Qx-gr3"/>
                         <outlet property="scoreLabel" destination="uwZ-qG-WUu" id="73p-TN-A9y"/>
                         <outlet property="skipButton" destination="HQ1-t2-yPD" id="L75-Ct-g2T"/>
-                        <segue destination="dUJ-is-GCa" kind="presentation" identifier="ResultsSegue" id="6ot-GE-Y4M"/>
+                        <segue destination="dUJ-is-GCa" kind="show" identifier="ResultsSegue" id="YJ8-Vr-tV7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -444,11 +444,59 @@
                     <connections>
                         <outlet property="resultsDisplayLabel" destination="VdL-3o-FJq" id="2OR-AQ-Hjb"/>
                         <outlet property="resultsTable" destination="VCj-FC-3yw" id="qJn-J9-drE"/>
+                        <segue destination="mXc-Kf-mWj" kind="presentation" identifier="IntervalHelpSegue" id="g7Y-gb-Ifr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qhx-I0-Jwa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1080.8" y="102.99850074962519"/>
         </scene>
+        <!--Interval Help Controller-->
+        <scene sceneID="ta3-2i-xon">
+            <objects>
+                <viewController id="mXc-Kf-mWj" userLabel="Interval Help Controller" customClass="IntervalHelpViewController" customModule="PerfectPitch2" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="O4Z-Kt-Nxg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Axf-9z-7hp">
+                                <rect key="frame" x="345" y="20" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="DD0-mc-WnP"/>
+                                    <constraint firstAttribute="width" constant="30" id="S11-hn-RhR"/>
+                                </constraints>
+                                <state key="normal" image="NSStopProgressFreestandingTemplate_2x_9923422d-02ea-4eb7-a567-6e9f7dbf9fd4.png"/>
+                                <connections>
+                                    <action selector="stopButton:" destination="mXc-Kf-mWj" eventType="touchUpInside" id="jNX-yS-e2B"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Interval" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ejo-op-zxn">
+                                <rect key="frame" x="142" y="67" width="91" height="63"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Axf-9z-7hp" firstAttribute="trailing" secondItem="USw-uU-0NY" secondAttribute="trailing" id="ZvS-XG-NfN"/>
+                            <constraint firstItem="Axf-9z-7hp" firstAttribute="top" secondItem="USw-uU-0NY" secondAttribute="top" id="wlJ-Df-2rv"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="USw-uU-0NY"/>
+                    </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="testLabel" destination="Ejo-op-zxn" id="MP5-7j-kNf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Urw-gU-gQi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1957.5999999999999" y="98.50074962518741"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="NSStopProgressFreestandingTemplate_2x_9923422d-02ea-4eb7-a567-6e9f7dbf9fd4.png" width="48" height="48"/>
+    </resources>
 </document>

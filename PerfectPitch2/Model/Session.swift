@@ -8,35 +8,129 @@
 
 import Foundation
 
+
+
+let notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
+
+
 class PracticeSession {
-    let root: String
-    let playRoot: Bool  // play a root note before, for interval practice
-    let notes: [String]
-    var questions: [String]
+    let playInterval: Bool  // play a root note before, for interval practice
+    let availableNotes: [String]
+    var questions: [Question]
     
     
-    init(availableNotes: [String], sessionLength: Int, playRootNote: Bool, rootNote: String = "C") {
-        playRoot = playRootNote
-        root = rootNote
-        notes = availableNotes
-        questions = generateSession(notes: availableNotes, length: sessionLength)
+    init(playInterval: Bool, questions: [Question], availableNotes: [String]) {
+        self.playInterval = playInterval
+        self.questions = questions
+        self.availableNotes = availableNotes
     }
     
     func regenerateQuestions(){
-        questions = generateSession(notes: notes, length: questions.count)
     }
+
     
     
 }
 
+// A Session with no intervals, testing perfect pitch with no reference point
+class NoReferenceSession: PracticeSession {
+    
+    init(notes:[String], length: Int, availableOctaves:[Int]) {
+        let sessionQuestions = generateSession(notes: notes, length: length, availableOctaves: availableOctaves)
+        
+        super.init(playInterval: false, questions: sessionQuestions, availableNotes: notes)
+    }
+}
 
-//generate a random session of notes from a set of notes
-func generateSession(notes:[String], length: Int) -> [String] {
-    var questions: [String] = []
+
+// A Session with specified intervals in a single key
+class KeyIntervalSession: PracticeSession {
+    let key:String
+    
+    init(key:String, availableIntervals:[Int], availableOctaves:[Int], length: Int) {
+        self.key = key
+        
+        // Generate questions
+        let sessionQuestions = generateSession(key: key, availableIntervals: availableIntervals, availableOctaves: availableOctaves, length: length)
+        
+        // Find the available notes
+        var possibleNotes:[String] = []
+    
+        let keyIdx = notes.index(of: key)! // get the index of the key
+        
+        for interval in availableIntervals {
+            possibleNotes.append(notes[(keyIdx + interval) % notes.count]) // The available notes are the interval distance away from the key, wrapped around for octaves
+        }
+        
+        super.init(playInterval: true, questions: sessionQuestions, availableNotes: possibleNotes)
+        
+    }
+    
+    
+
+}
+
+
+// A Session that plays specified intervals, with a random root note
+class RandRootIntervalSession: PracticeSession {
+    init(availableIntervals:[Int], availableNotes:[String] , availableOctaves:[Int], length:Int){
+        let sessionQuestions = generateSession(availableIntervals: availableIntervals, availableOctaves: availableOctaves, length: length)
+        
+        super.init(playInterval: true, questions: sessionQuestions, availableNotes: notes)
+    }
+    
+}
+
+
+//generate a random session of notes from a set of notes, with no intervals
+func generateSession(notes:[String], length: Int, availableOctaves:[Int]) -> [Question] {
+    var questions: [Question] = []
     
     for _ in 1...length {
-        let randomIndex = Int(arc4random_uniform(UInt32(notes.count)))
-        questions.append(notes[randomIndex])
+        let randomNoteIDX = Int(arc4random_uniform(UInt32(notes.count))) //Generate a random index that represents the note to be played
+        let randomOctaveIDX = Int(arc4random_uniform(UInt32(availableOctaves.count))) //Generate a random index for that notes octave
+        
+        let question = NoReferenceQuestion(key: notes[randomNoteIDX], octave: availableOctaves[randomOctaveIDX]) // Create a new noReferenceQuestion
+        
+        
+        questions.append(question)
+    }
+    
+    return questions
+}
+
+
+// generate a random session of interval questions from a key, with specified intervals
+func generateSession(key:String, availableIntervals:[Int], availableOctaves:[Int], length: Int) -> [Question] {
+    var questions: [Question] = []
+    
+    for _ in 1...length {
+        let randomIntervalIDX = Int(arc4random_uniform(UInt32(notes.count))) //Generate a random index that represents the note to be played
+        let randomOctaveIDX = Int(arc4random_uniform(UInt32(availableOctaves.count))) //Generate a random index for that notes octave
+        
+        let question = IntervalQuestion(key: key, octave: availableOctaves[randomOctaveIDX], intervalDistance: availableIntervals[randomIntervalIDX]) // Create a new IntervalQuestion
+        
+        
+        questions.append(question)
+    }
+    
+    return questions
+}
+
+
+// generate a random session of interval questions with a random base key
+func generateSession(availableIntervals:[Int],  availableOctaves:[Int], length:Int) -> [Question] {
+    var questions: [Question] = []
+    
+    for _ in 1...length {
+        let randomRootIDX = Int(arc4random_uniform(UInt32(notes.count))) // Random root key
+        let randomIntervalIDX = Int(arc4random_uniform(UInt32(notes.count))) //Generate a random index that represents the note to be played
+        let randomOctaveIDX = Int(arc4random_uniform(UInt32(availableOctaves.count))) //Generate a random index for that notes octave
+        
+        let question = IntervalQuestion(key: notes[randomRootIDX], octave: availableOctaves[randomOctaveIDX],
+                                        intervalDistance: availableIntervals[randomIntervalIDX]) // Create a new IntervalQuestion
+        
+        questions.append(question)
     }
     
     return questions

@@ -63,7 +63,7 @@ class ViewController: UIViewController {
     var score: Int = 0
     var firstTry: Bool = true //Only add to the score if the user got it on the first try
     
-    let session = PracticeSession(availableNotes: ["C", "D", "E", "F", "G", "A", "B"], sessionLength: 10, playRootNote: true)
+    let session = PracticeSession(availableNotes: ["D", "E", "F", "G", "A", "B"], sessionLength: 1, playRootNote: true)
 
     
     
@@ -152,7 +152,7 @@ class ViewController: UIViewController {
     
     // play the notes for the current question
     func playQuestion() {
-        if session.playRoot {
+        if session.playInterval {
             playNote(note: session.root)
             sleep(1)
         }

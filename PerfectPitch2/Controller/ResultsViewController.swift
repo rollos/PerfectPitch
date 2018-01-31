@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ResultsViewController: UIViewController, UITableViewDataSource {
+class ResultsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
     
@@ -58,6 +58,22 @@ class ResultsViewController: UIViewController, UITableViewDataSource {
         
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    
+        let indexPath = tableView.indexPathForSelectedRow
+        
+        let currentCell = tableView.cellForRow(at: indexPath!)! as UITableViewCell
+        
+        let currentItem = currentCell.textLabel!.text!
+        
+        
+        performSegue(withIdentifier: "IntervalHelpSegue", sender: currentItem)
+    }
+    
+    
+
+    
     
     /*
     // MARK: - Navigation
@@ -68,5 +84,11 @@ class ResultsViewController: UIViewController, UITableViewDataSource {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destVC : IntervalHelpViewController = segue.destination as! IntervalHelpViewController
+        
+        destVC.labelData = sender as! String
+    }
 
 }
