@@ -63,7 +63,7 @@ class ViewController: UIViewController {
     var score: Int = 0
     var firstTry: Bool = true //Only add to the score if the user got it on the first try
     
-    let session = PracticeSession(availableNotes: ["D", "E", "F", "G", "A", "B"], sessionLength: 1, playRootNote: true)
+    let session = RandRootIntervalSession(availableIntervals: [2,4,5,7,9,11], availableNotes: ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"], availableOctaves: [2], length: 10)
 
     
     
@@ -79,7 +79,7 @@ class ViewController: UIViewController {
         
         playQuestion()
         
-        for note in session.notes {
+        for note in session.availableNotes {
             resultsDict[note] = ResultsData()
         }
         
@@ -98,15 +98,15 @@ class ViewController: UIViewController {
         
         
         // If the user got the right answer
-        if notePressed == session.questions[questionNumber] {
-            resultsDict[session.questions[questionNumber]]?.playCount += 1
+        if notePressed == session.questions[questionNumber].questionNote {
+            resultsDict[session.questions[questionNumber].questionNote]?.playCount += 1 // increase the playcount in our resultsDict
             
             
             // if it was on the first try, increase the score
             if firstTry {
                 score += 1
                 scoreLabel.text = "Score: \(score)"
-                resultsDict[session.questions[questionNumber]]!.correctCount += 1
+                resultsDict[session.questions[questionNumber].questionNote]!.correctCount += 1 // Increase the score for that note
             }
             resultLabel.text = "Correct! That note was a \(session.questions[questionNumber])"
             skipButton.setTitle("Next", for: .normal)
@@ -135,29 +135,18 @@ class ViewController: UIViewController {
     
     // Update the score, counter, progression
     func updateUI() {
-        enableAvailableNotes(availableNotes: session.notes)
+        enableAvailableNotes(availableNotes: session.availableNotes)
         questionCounter.text = "\(questionNumber)/\(session.questions.count)"
         scoreLabel.text = "Score: \(score)"
         
     }
     
-    func restartSession() {
-        session.regenerateQuestions()
-        firstTry = true
-        score = 0
-        questionNumber = 0
-        updateUI()
-    }
     
     
     // play the notes for the current question
     func playQuestion() {
-        if session.playInterval {
-            playNote(note: session.root)
-            sleep(1)
-        }
-        playNote(note:session.questions[questionNumber])
-    
+        session.questions[questionNumber].playQuestion(playNote: playNote)
+        
     }
     
     @IBAction func playAgain(_ sender: UIButton) {
@@ -242,7 +231,7 @@ class ViewController: UIViewController {
         
         destVC.scoreData = "Score: \(score)/\(session.questions.count)"
         destVC.resultDict = resultsDict
-        destVC.availableNotes = session.notes
+        destVC.availableNotes = session.availableNotes
     }
     
   

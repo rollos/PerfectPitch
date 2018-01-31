@@ -13,6 +13,8 @@ import Foundation
 let notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
 
 
+
+// Base practice Session
 class PracticeSession {
     let playInterval: Bool  // play a root note before, for interval practice
     let availableNotes: [String]
@@ -24,12 +26,6 @@ class PracticeSession {
         self.questions = questions
         self.availableNotes = availableNotes
     }
-    
-    func regenerateQuestions(){
-    }
-
-    
-    
 }
 
 // A Session with no intervals, testing perfect pitch with no reference point
@@ -105,7 +101,7 @@ func generateSession(key:String, availableIntervals:[Int], availableOctaves:[Int
     var questions: [Question] = []
     
     for _ in 1...length {
-        let randomIntervalIDX = Int(arc4random_uniform(UInt32(notes.count))) //Generate a random index that represents the note to be played
+        let randomIntervalIDX = Int(arc4random_uniform(UInt32(availableIntervals.count))) //Generate a random index that determines the interval to be played
         let randomOctaveIDX = Int(arc4random_uniform(UInt32(availableOctaves.count))) //Generate a random index for that notes octave
         
         let question = IntervalQuestion(key: key, octave: availableOctaves[randomOctaveIDX], intervalDistance: availableIntervals[randomIntervalIDX]) // Create a new IntervalQuestion
@@ -124,7 +120,7 @@ func generateSession(availableIntervals:[Int],  availableOctaves:[Int], length:I
     
     for _ in 1...length {
         let randomRootIDX = Int(arc4random_uniform(UInt32(notes.count))) // Random root key
-        let randomIntervalIDX = Int(arc4random_uniform(UInt32(notes.count))) //Generate a random index that represents the note to be played
+        let randomIntervalIDX = Int(arc4random_uniform(UInt32(availableIntervals.count))) //Generate a random index that represents the note to be played
         let randomOctaveIDX = Int(arc4random_uniform(UInt32(availableOctaves.count))) //Generate a random index for that notes octave
         
         let question = IntervalQuestion(key: notes[randomRootIDX], octave: availableOctaves[randomOctaveIDX],
