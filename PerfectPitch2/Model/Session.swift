@@ -19,22 +19,24 @@ class PracticeSession {
     let playInterval: Bool  // play a root note before, for interval practice
     let availableNotes: [String]
     var questions: [Question]
+    let title: String
     
     
-    init(playInterval: Bool, questions: [Question], availableNotes: [String]) {
+    init(playInterval: Bool, questions: [Question], availableNotes: [String], title:String) {
         self.playInterval = playInterval
         self.questions = questions
         self.availableNotes = availableNotes
+        self.title = title
     }
 }
 
 // A Session with no intervals, testing perfect pitch with no reference point
 class NoReferenceSession: PracticeSession {
     
-    init(notes:[String], length: Int, availableOctaves:[Int]) {
+    init(notes:[String], length: Int, availableOctaves:[Int], title:String) {
         let sessionQuestions = generateSession(notes: notes, length: length, availableOctaves: availableOctaves)
         
-        super.init(playInterval: false, questions: sessionQuestions, availableNotes: notes)
+        super.init(playInterval: false, questions: sessionQuestions, availableNotes: notes, title: title)
     }
 }
 
@@ -43,7 +45,7 @@ class NoReferenceSession: PracticeSession {
 class KeyIntervalSession: PracticeSession {
     let key:String
     
-    init(key:String, availableIntervals:[Int], availableOctaves:[Int], length: Int) {
+    init(key:String, availableIntervals:[Int], availableOctaves:[Int], length: Int, title:String) {
         self.key = key
         
         // Generate questions
@@ -58,7 +60,7 @@ class KeyIntervalSession: PracticeSession {
             possibleNotes.append(notes[(keyIdx + interval) % notes.count]) // The available notes are the interval distance away from the key, wrapped around for octaves
         }
         
-        super.init(playInterval: true, questions: sessionQuestions, availableNotes: possibleNotes)
+        super.init(playInterval: true, questions: sessionQuestions, availableNotes: possibleNotes, title:title)
         
     }
     
@@ -69,10 +71,10 @@ class KeyIntervalSession: PracticeSession {
 
 // A Session that plays specified intervals, with a random root note
 class RandRootIntervalSession: PracticeSession {
-    init(availableIntervals:[Int], availableNotes:[String] , availableOctaves:[Int], length:Int){
+    init(availableIntervals:[Int], availableNotes:[String] , availableOctaves:[Int], length:Int, title:String){
         let sessionQuestions = generateSession(availableIntervals: availableIntervals, availableOctaves: availableOctaves, length: length)
         
-        super.init(playInterval: true, questions: sessionQuestions, availableNotes: notes)
+        super.init(playInterval: true, questions: sessionQuestions, availableNotes: notes, title:title)
     }
     
 }

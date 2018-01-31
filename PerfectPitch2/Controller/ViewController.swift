@@ -64,9 +64,11 @@ class ViewController: UIViewController {
     var score: Int = 0
     var firstTry: Bool = true //Only add to the score if the user got it on the first try
     
-    let session = RandRootIntervalSession(availableIntervals: [2,4,5,7,9,11], availableNotes: ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"], availableOctaves: [2], length: 10)
-   // let session = KeyIntervalSession(key: "C", availableIntervals: [2,4,5,7,9,11], availableOctaves: [2], length: 10)
-    //let session = NoReferenceSession(notes: ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"], length: 10, availableOctaves: [2])
+    //var session:PracticeSession
+    
+    var session = PracticeSession(playInterval: true, questions: [], availableNotes: [], title: "")
+   
+    
     
     
     
