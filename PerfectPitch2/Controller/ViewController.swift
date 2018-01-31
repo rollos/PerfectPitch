@@ -73,13 +73,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         roundButtons()
         
         //enable the active notes for this session
@@ -88,6 +81,14 @@ class ViewController: UIViewController {
         for note in session.availableNotes {
             resultsDict[note] = ResultsData()
         }
+        playNote(note: "C", octave: 3, rootNote: false)
+        
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         
         playQuestion()
         
@@ -118,15 +119,9 @@ class ViewController: UIViewController {
             }
             
             
-            UIView.animate(withDuration: 0.5, animations: {
-                self.checkView.alpha = 1.0
-            }, completion: { _ in
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.checkView.alpha = 0
-                })
-            })
+            fadeCheckMark() //show checkmark, the user got it right
             
-            
+            // After a small pause, move to the next question
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
                 self.nextQuestion()
             }
@@ -144,15 +139,18 @@ class ViewController: UIViewController {
         
     }
     
+    // Setup the next question
     func nextQuestion() {
         questionNumber += 1
+        
+        // If this is the last question, go to the results screen
         if questionNumber >= session.questions.count {
-            //restartSession()
             performSegue(withIdentifier: "ResultsSegue", sender: self)
             return
         }
+        
+        
         firstTry = true
-        skipButton.setTitle("Skip", for: .normal)
         updateUI()
         playQuestion()
     }
@@ -165,29 +163,28 @@ class ViewController: UIViewController {
         
     }
     
-    
-    
     // play the notes for the current question
     func playQuestion() {
         session.questions[questionNumber].playQuestion(playNote: playNote)
-        
     }
     
     @IBAction func playAgain(_ sender: UIButton) {
         playQuestion()
-        
     }
     
     // Play a note from an audio file
-    // If it's a root note, signal the note to the user, and wait for 1 second for the next note to play
-    func playNote(note:String, rootNote:Bool){
+    func playNote(note:String, octave:Int, rootNote:Bool){
         
+        print("Playing: \(note)\(octave)")
+        // If it's a root note, signal the note to the user, and wait for 1 second for the next note to play
         if rootNote {
             let button = noteToButton(note: note) //get the button object
             let originalColor = button.backgroundColor
             
+            
+            // Animate the key press, so user knows what the root is
             UIView.animate(withDuration: 0.75, animations: {
-                button.backgroundColor = UIColor.gray
+                button.backgroundColor = UIColor.gray //Set the color to gray
             },completion: { _ in
                 button.backgroundColor = originalColor //change it back to original color
             })
@@ -195,13 +192,13 @@ class ViewController: UIViewController {
             
         }
         
-        let sound = Bundle.main.url(forResource: "\(note)2", withExtension: "wav")
+        let sound = Bundle.main.url(forResource: "\(note)\(String(octave))", withExtension: "wav") // Find the actual file of the sound being played
         do {
+            // Play the sound
             player = try AVAudioPlayer(contentsOf: sound!)
             guard let player = player else {return}
             player.prepareToPlay()
             player.play()
-            print(player.isPlaying)
             
             
         } catch let error {
@@ -272,6 +269,19 @@ class ViewController: UIViewController {
         destVC.scoreData = "Score: \(score)/\(session.questions.count)"
         destVC.resultDict = resultsDict
         destVC.availableNotes = session.availableNotes
+    }
+    
+    
+    // Fade in and out the checkmark if a user got the right answer
+    func fadeCheckMark(){
+        UIView.animate(withDuration: 0.5, animations: {
+            self.checkView.alpha = 1.0 //Fade in
+        }, completion: { _ in
+            
+            UIView.animate(withDuration: 0.5, animations: {
+                self.checkView.alpha = 0 //Fade out
+            })
+        })
     }
     
   

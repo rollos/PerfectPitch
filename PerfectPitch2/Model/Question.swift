@@ -21,7 +21,7 @@ class Question {
         self.isInterval = isInterval
     }
     
-    func playQuestion(playNote: @escaping (String, Bool) -> ()){
+    func playQuestion(playNote: @escaping (String, Int, Bool) -> ()){
     }
 }
 
@@ -46,7 +46,7 @@ class IntervalQuestion: Question {
         
         var oct:Int
         // If the second note is in the next octave, add one to the octave of the root
-        if nextIdx > notes.count{
+        if nextIdx >= notes.count{
              oct = octave + 1
         } else {
             oct = octave
@@ -55,10 +55,10 @@ class IntervalQuestion: Question {
         super.init(questionNote: note, octave: oct, isInterval: true)
     }
     
-    override func playQuestion(playNote: @escaping (String, Bool) -> ()) {
-        playNote(rootNote, true)
+    override func playQuestion(playNote: @escaping (String, Int, Bool) -> ()) {
+        playNote(rootNote, rootOctave, true)
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-            playNote(self.questionNote, false)
+            playNote(self.questionNote, self.octave, false)
         }
         
     }
@@ -69,7 +69,7 @@ class NoReferenceQuestion: Question {
         super.init(questionNote: key, octave: octave, isInterval: false)
     }
     
-    override func playQuestion(playNote: @escaping (String, Bool) -> ()) {
-        playNote(questionNote, false)
+    override func playQuestion(playNote: @escaping (String, Int, Bool) -> ()) {
+        playNote(questionNote, octave, false)
     }
 }
