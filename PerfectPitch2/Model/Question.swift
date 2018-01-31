@@ -21,7 +21,7 @@ class Question {
         self.isInterval = isInterval
     }
     
-    func playQuestion(playNote:(String) -> ()){
+    func playQuestion(playNote: @escaping (String, Bool) -> ()){
     }
 }
 
@@ -55,10 +55,12 @@ class IntervalQuestion: Question {
         super.init(questionNote: note, octave: oct, isInterval: true)
     }
     
-    override func playQuestion(playNote: (String) -> ()) {
-        playNote(rootNote)
-        sleep(1)
-        playNote(questionNote)
+    override func playQuestion(playNote: @escaping (String, Bool) -> ()) {
+        playNote(rootNote, true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+            playNote(self.questionNote, false)
+        }
+        
     }
 }
 
@@ -67,7 +69,7 @@ class NoReferenceQuestion: Question {
         super.init(questionNote: key, octave: octave, isInterval: false)
     }
     
-    override func playQuestion(playNote: (String) -> ()) {
-        playNote(questionNote)
+    override func playQuestion(playNote: @escaping (String, Bool) -> ()) {
+        playNote(questionNote, false)
     }
 }

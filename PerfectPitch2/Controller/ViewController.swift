@@ -38,9 +38,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var skipButton: UIButton!
     
     // Labels
-    @IBOutlet weak var resultLabel: UILabel!
     @IBOutlet weak var questionCounter: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var checkView: UIImageView!
+    
     
     // Progress Bar
     @IBOutlet weak var progressView: UIView!
@@ -64,7 +65,9 @@ class ViewController: UIViewController {
     var firstTry: Bool = true //Only add to the score if the user got it on the first try
     
     let session = RandRootIntervalSession(availableIntervals: [2,4,5,7,9,11], availableNotes: ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"], availableOctaves: [2], length: 10)
-
+   // let session = KeyIntervalSession(key: "C", availableIntervals: [2,4,5,7,9,11], availableOctaves: [2], length: 10)
+    //let session = NoReferenceSession(notes: ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"], length: 10, availableOctaves: [2])
+    
     
     
     override func viewDidLoad() {
@@ -72,16 +75,21 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         roundButtons()
         
         //enable the active notes for this session
         updateUI()
         
-        playQuestion()
-        
         for note in session.availableNotes {
             resultsDict[note] = ResultsData()
         }
+        
+        playQuestion()
         
     }
 
@@ -108,8 +116,20 @@ class ViewController: UIViewController {
                 scoreLabel.text = "Score: \(score)"
                 resultsDict[session.questions[questionNumber].questionNote]!.correctCount += 1 // Increase the score for that note
             }
-            resultLabel.text = "Correct! That note was a \(session.questions[questionNumber])"
-            skipButton.setTitle("Next", for: .normal)
+            
+            
+            UIView.animate(withDuration: 0.5, animations: {
+                self.checkView.alpha = 1.0
+            }, completion: { _ in
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.checkView.alpha = 0
+                })
+            })
+            
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                self.nextQuestion()
+            }
             
             
         } else {
@@ -120,6 +140,11 @@ class ViewController: UIViewController {
     
     // Skip/Next button pressed
     @IBAction func skipButton(_ sender: UIButton) {
+        nextQuestion()
+        
+    }
+    
+    func nextQuestion() {
         questionNumber += 1
         if questionNumber >= session.questions.count {
             //restartSession()
@@ -130,7 +155,6 @@ class ViewController: UIViewController {
         skipButton.setTitle("Skip", for: .normal)
         updateUI()
         playQuestion()
-        
     }
     
     // Update the score, counter, progression
@@ -155,7 +179,21 @@ class ViewController: UIViewController {
     }
     
     // Play a note from an audio file
-    func playNote(note:String){
+    // If it's a root note, signal the note to the user, and wait for 1 second for the next note to play
+    func playNote(note:String, rootNote:Bool){
+        
+        if rootNote {
+            let button = noteToButton(note: note) //get the button object
+            let originalColor = button.backgroundColor
+            
+            UIView.animate(withDuration: 0.75, animations: {
+                button.backgroundColor = UIColor.gray
+            },completion: { _ in
+                button.backgroundColor = originalColor //change it back to original color
+            })
+            
+            
+        }
         
         let sound = Bundle.main.url(forResource: "\(note)2", withExtension: "wav")
         do {
@@ -164,6 +202,8 @@ class ViewController: UIViewController {
             player.prepareToPlay()
             player.play()
             print(player.isPlaying)
+            
+            
         } catch let error {
             print(error.localizedDescription)
         }

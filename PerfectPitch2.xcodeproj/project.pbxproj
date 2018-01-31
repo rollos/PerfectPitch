@@ -15,6 +15,7 @@
 		1753B8BA202121AC004AA665 /* IntervalHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1753B8B9202121AC004AA665 /* IntervalHelpViewController.swift */; };
 		1753B8BE20213631004AA665 /* NSStopProgressFreestandingTemplate_2x_9923422d-02ea-4eb7-a567-6e9f7dbf9fd4.png in Resources */ = {isa = PBXBuildFile; fileRef = 1753B8BD20213631004AA665 /* NSStopProgressFreestandingTemplate_2x_9923422d-02ea-4eb7-a567-6e9f7dbf9fd4.png */; };
 		1753B8C220214B51004AA665 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1753B8C120214B51004AA665 /* Question.swift */; };
+		1753B8CA20218027004AA665 /* Echo_curation_alt_check_mark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1753B8C920218027004AA665 /* Echo_curation_alt_check_mark.png */; };
 		17807BC2201FC2AB004EE8A9 /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17807BC1201FC2AB004EE8A9 /* ResultsViewController.swift */; };
 		17807BC4201FD4D2004EE8A9 /* ResultsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17807BC3201FD4D2004EE8A9 /* ResultsData.swift */; };
 		17D379D1201AAAEE00A97A35 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D379D0201AAAEE00A97A35 /* Session.swift */; };
@@ -45,6 +46,7 @@
 		1753B8B9202121AC004AA665 /* IntervalHelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalHelpViewController.swift; sourceTree = "<group>"; };
 		1753B8BD20213631004AA665 /* NSStopProgressFreestandingTemplate_2x_9923422d-02ea-4eb7-a567-6e9f7dbf9fd4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NSStopProgressFreestandingTemplate_2x_9923422d-02ea-4eb7-a567-6e9f7dbf9fd4.png"; sourceTree = "<group>"; };
 		1753B8C120214B51004AA665 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
+		1753B8C920218027004AA665 /* Echo_curation_alt_check_mark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Echo_curation_alt_check_mark.png; sourceTree = "<group>"; };
 		17807BC1201FC2AB004EE8A9 /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
 		17807BC3201FD4D2004EE8A9 /* ResultsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsData.swift; sourceTree = "<group>"; };
 		17D379D0201AAAEE00A97A35 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				1753B8BD20213631004AA665 /* NSStopProgressFreestandingTemplate_2x_9923422d-02ea-4eb7-a567-6e9f7dbf9fd4.png */,
+				1753B8C920218027004AA665 /* Echo_curation_alt_check_mark.png */,
 				17D379D4201BE2F300A97A35 /* PianoNotes */,
 				170BE2B0201A78FE0061DD80 /* LaunchScreen.storyboard */,
 				170BE2B3201A78FE0061DD80 /* Info.plist */,
@@ -227,6 +230,7 @@
 				17D379EA201BE30C00A97A35 /* F2.wav in Resources */,
 				17D379E6201BE30C00A97A35 /* E2.wav in Resources */,
 				1753B8BE20213631004AA665 /* NSStopProgressFreestandingTemplate_2x_9923422d-02ea-4eb7-a567-6e9f7dbf9fd4.png in Resources */,
+				1753B8CA20218027004AA665 /* Echo_curation_alt_check_mark.png in Resources */,
 				17D379E8201BE30C00A97A35 /* G#2.wav in Resources */,
 				17D379E5201BE30C00A97A35 /* D2.wav in Resources */,
 				170BE2B2201A78FE0061DD80 /* LaunchScreen.storyboard in Resources */,
