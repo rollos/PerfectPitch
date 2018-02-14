@@ -13,7 +13,7 @@ import AVFoundation
 
 
 
-class ViewController: UIViewController {
+class GameViewController: UIViewController {
 
     
     //Keyboard Notes
@@ -35,7 +35,6 @@ class ViewController: UIViewController {
     
     // Other Buttons
     @IBOutlet weak var playAgainButton: UIButton!
-    @IBOutlet weak var skipButton: UIButton!
     
     // Labels
     @IBOutlet weak var questionCounter: UILabel!
@@ -67,11 +66,7 @@ class ViewController: UIViewController {
     //var session:PracticeSession
     
     var session = PracticeSession(playInterval: true, questions: [], availableNotes: [], title: "")
-   
-    
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -80,10 +75,28 @@ class ViewController: UIViewController {
         //enable the active notes for this session
         updateUI()
         
-        for note in session.availableNotes {
-            resultsDict[note] = ResultsData()
+        
+        // Initialize results dict
+        if session is KeyIntervalSession {
+            let ses = session as! KeyIntervalSession
+            
+            for interval in ses.availableIntervals {
+                resultsDict[String(interval)] = ResultsData()
+            }
         }
-        playNote(note: "C", octave: 3, rootNote: false)
+            
+            
+        else if session is RandRootIntervalSession {
+            let ses = session as! RandRootIntervalSession
+            
+            for interval in ses.availableIntervals {
+                resultsDict[String(interval)] = ResultsData()
+            }
+        } else {
+            for note in session.availableNotes {
+                resultsDict[note] = ResultsData()
+            }
+        }
         
         
     }
@@ -91,7 +104,7 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        
+        // Play the first question after the UI shows up
         playQuestion()
         
     }
@@ -103,21 +116,50 @@ class ViewController: UIViewController {
     
     //Piano key pressed
     @IBAction func keyPressed(_ sender: UIButton) {
-        print("\(tagToNote(tag: sender.tag))")
         
-        let notePressed = tagToNote(tag: sender.tag)
+        let notePressed = tagToNote(tag: sender.tag) // Get the name of the note
         
         
         // If the user got the right answer
         if notePressed == session.questions[questionNumber].questionNote {
-            resultsDict[session.questions[questionNumber].questionNote]?.playCount += 1 // increase the playcount in our resultsDict
+            
+            if session is KeyIntervalSession {
+                let ses = session as! KeyIntervalSession
+                let question = ses.questions[questionNumber] as! IntervalQuestion
+                resultsDict[String(question.intervalDistance)]!.playCount += 1
+            
+            }
+            else if session is RandRootIntervalSession {
+                let ses = session as! RandRootIntervalSession
+                let question = ses.questions[questionNumber] as! IntervalQuestion
+                resultsDict[String(question.intervalDistance)]!.playCount += 1
+            }
+            else {
+                resultsDict[session.questions[questionNumber].questionNote]?.playCount += 1 // increase the playcount in our resultsDict
+            }
             
             
             // if it was on the first try, increase the score
             if firstTry {
                 score += 1
                 scoreLabel.text = "Score: \(score)"
-                resultsDict[session.questions[questionNumber].questionNote]!.correctCount += 1 // Increase the score for that note
+                
+                if session is KeyIntervalSession  {
+                    let ses = session as! KeyIntervalSession
+                    let question = ses.questions[questionNumber] as! IntervalQuestion
+                    
+                    resultsDict[String(question.intervalDistance)]!.correctCount += 1 // Increase the score in our overall results for that note
+                } else if session is RandRootIntervalSession {
+                    let ses = session as! RandRootIntervalSession
+                    let question = ses.questions[questionNumber] as! IntervalQuestion
+                    
+                    resultsDict[String(question.intervalDistance)]!.correctCount += 1 // Increase the score in our overall results for that note
+                }
+                else {
+                    resultsDict[session.questions[questionNumber].questionNote]!.correctCount += 1
+                }
+                
+                
             }
             
             
@@ -133,12 +175,6 @@ class ViewController: UIViewController {
             firstTry = false
             sender.isEnabled = false //disable the note that was attempted
         }
-    }
-    
-    // Skip/Next button pressed
-    @IBAction func skipButton(_ sender: UIButton) {
-        nextQuestion()
-        
     }
     
     // Setup the next question
@@ -157,7 +193,7 @@ class ViewController: UIViewController {
         playQuestion()
     }
     
-    // Update the score, counter, progression
+    // Update the score, counter,
     func updateUI() {
         enableAvailableNotes(availableNotes: session.availableNotes)
         questionCounter.text = "\(questionNumber)/\(session.questions.count)"
@@ -177,23 +213,11 @@ class ViewController: UIViewController {
     // Play a note from an audio file
     func playNote(note:String, octave:Int, rootNote:Bool){
         
-        print("Playing: \(note)\(octave)")
         // If it's a root note, signal the note to the user, and wait for 1 second for the next note to play
-        if rootNote {
-            let button = noteToButton(note: note) //get the button object
-            let originalColor = button.backgroundColor
-            
-            
-            // Animate the key press, so user knows what the root is
-            UIView.animate(withDuration: 0.75, animations: {
-                button.backgroundColor = UIColor.gray //Set the color to gray
-            },completion: { _ in
-                button.backgroundColor = originalColor //change it back to original color
-            })
-            
-            
-        }
+        if rootNote { showKeyPress(button: noteToButton(note: note)) }
         
+        
+        // Play the sound
         let sound = Bundle.main.url(forResource: "\(note)\(String(octave))", withExtension: "wav") // Find the actual file of the sound being played
         do {
             // Play the sound
@@ -209,6 +233,20 @@ class ViewController: UIViewController {
     }
     
     
+    // Show a key press on the piano
+    func showKeyPress(button:UIButton){
+        
+        let originalColor = button.backgroundColor
+        UIView.animate(withDuration: 0.25, animations: {
+            button.backgroundColor = UIColor.gray //Set the color to gray
+        },completion: { _ in
+            
+            UIView.animate(withDuration: 0.5, animations: {
+                button.backgroundColor = originalColor //change it back to original color
+            })
+            
+        })
+    }
     // Round out the edges of the buttons
     func roundButtons(){
         // White Keys
@@ -229,7 +267,6 @@ class ViewController: UIViewController {
         
         // Other buttons
         playAgainButton.layer.cornerRadius = 10
-        skipButton.layer.cornerRadius = 10
     }
     
     func disableAllNotes(){
@@ -248,6 +285,8 @@ class ViewController: UIViewController {
         
     }
     
+    
+    // Enable the available notes for a question, all other notes will be disabled
     func enableAvailableNotes(availableNotes: [String]){
         disableAllNotes()
         for note in availableNotes {
@@ -265,26 +304,32 @@ class ViewController: UIViewController {
         return self.view.viewWithTag(noteTags[note]!) as! UIButton
     }
     
+    // Fade in and out the checkmark if a user got the right answer
+    func fadeCheckMark(){
+        UIView.animate(withDuration: 0.25, animations: {
+            self.checkView.alpha = 1.0 //Fade in
+        }, completion: { _ in
+            
+            UIView.animate(withDuration: 0.75, animations: {
+                self.checkView.alpha = 0 //Fade out
+            })
+        })
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destVC : ResultsViewController = segue.destination as! ResultsViewController
         
         destVC.scoreData = "Score: \(score)/\(session.questions.count)"
         destVC.resultDict = resultsDict
-        destVC.availableNotes = session.availableNotes
+        
+        if session is KeyIntervalSession || session is RandRootIntervalSession {
+            destVC.isInterval = true
+        }
+        
     }
     
     
-    // Fade in and out the checkmark if a user got the right answer
-    func fadeCheckMark(){
-        UIView.animate(withDuration: 0.5, animations: {
-            self.checkView.alpha = 1.0 //Fade in
-        }, completion: { _ in
-            
-            UIView.animate(withDuration: 0.5, animations: {
-                self.checkView.alpha = 0 //Fade out
-            })
-        })
-    }
+    
     
   
     

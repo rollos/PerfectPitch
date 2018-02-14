@@ -40,7 +40,7 @@ class SessionSelectionViewController: UIViewController, UITableViewDelegate, UIT
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         
-        performSegue(withIdentifier: "GameSegue", sender: self)
+        performSegue(withIdentifier: "GameOptionsSegue", sender: self)
         
         
         
@@ -84,7 +84,7 @@ class SessionSelectionViewController: UIViewController, UITableViewDelegate, UIT
         
         let currentItem = currentCell.textLabel!.text!
         
-        let destVC : ViewController = segue.destination as! ViewController
+        let destVC : OptionsViewController = segue.destination as! OptionsViewController
         
         destVC.session = self.sessionBank.sessions[currentItem]!
         

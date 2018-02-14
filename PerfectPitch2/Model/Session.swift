@@ -17,9 +17,10 @@ let notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
 // Base practice Session
 class PracticeSession {
     let playInterval: Bool  // play a root note before, for interval practice
-    let availableNotes: [String]
+    var availableNotes: [String]
     var questions: [Question]
     let title: String
+    
     
     
     init(playInterval: Bool, questions: [Question], availableNotes: [String], title:String) {
@@ -28,25 +29,40 @@ class PracticeSession {
         self.availableNotes = availableNotes
         self.title = title
     }
+    
+    func regenerateQuestions(length: Int, availableOctaves: [Int]) {
+        
+    }
+    
 }
 
 // A Session with no intervals, testing perfect pitch with no reference point
 class NoReferenceSession: PracticeSession {
     
+    
     init(notes:[String], length: Int, availableOctaves:[Int], title:String) {
         let sessionQuestions = generateSession(notes: notes, length: length, availableOctaves: availableOctaves)
+       
         
         super.init(playInterval: false, questions: sessionQuestions, availableNotes: notes, title: title)
     }
+    
+    override func regenerateQuestions(length: Int, availableOctaves: [Int]) {
+        self.questions = generateSession(notes: self.availableNotes, length: length, availableOctaves: availableOctaves)
+    }
+    
+    
 }
 
 
 // A Session with specified intervals in a single key
 class KeyIntervalSession: PracticeSession {
     let key:String
+    let availableIntervals:[Int]
     
     init(key:String, availableIntervals:[Int], availableOctaves:[Int], length: Int, title:String) {
         self.key = key
+        self.availableIntervals = availableIntervals
         
         // Generate questions
         let sessionQuestions = generateSession(key: key, availableIntervals: availableIntervals, availableOctaves: availableOctaves, length: length)
@@ -64,6 +80,22 @@ class KeyIntervalSession: PracticeSession {
         
     }
     
+    func regenerateQuestions(key:String, length: Int, availableOctaves:[Int]) {
+        self.questions = generateSession(key: key, availableIntervals: self.availableIntervals, availableOctaves: availableOctaves, length: length)
+        
+        
+        //update availableNotes
+        let keyIdx = notes.index(of: key)! // get the index of the key
+        var possibleNotes:[String] = []
+        
+        
+        for interval in availableIntervals {
+            possibleNotes.append(notes[(keyIdx + interval) % notes.count]) // The available notes are the interval distance away from the key, wrapped around for octaves
+        }
+        
+        self.availableNotes = possibleNotes
+    }
+    
     
 
 }
@@ -71,10 +103,17 @@ class KeyIntervalSession: PracticeSession {
 
 // A Session that plays specified intervals, with a random root note
 class RandRootIntervalSession: PracticeSession {
+    let availableIntervals: [Int]
+    
     init(availableIntervals:[Int], availableNotes:[String] , availableOctaves:[Int], length:Int, title:String){
+        self.availableIntervals = availableIntervals
         let sessionQuestions = generateSession(availableIntervals: availableIntervals, availableOctaves: availableOctaves, length: length)
         
         super.init(playInterval: true, questions: sessionQuestions, availableNotes: notes, title:title)
+    }
+    
+    override func regenerateQuestions(length: Int, availableOctaves: [Int]) {
+        self.questions = generateSession(availableIntervals: self.availableIntervals, availableOctaves: availableOctaves, length: length)
     }
     
 }

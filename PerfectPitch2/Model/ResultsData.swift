@@ -10,8 +10,6 @@ import Foundation
 
 
 class ResultsData {
-    var playCount:Int = 0
-    var correctCount:Int = 0
-    
-   
+    var playCount: Int = 0
+    var correctCount: Int = 0
 }

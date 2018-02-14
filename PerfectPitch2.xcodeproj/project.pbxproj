@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		170BE2A8201A78FE0061DD80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170BE2A7201A78FE0061DD80 /* AppDelegate.swift */; };
-		170BE2AA201A78FE0061DD80 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170BE2A9201A78FE0061DD80 /* ViewController.swift */; };
+		170BE2AA201A78FE0061DD80 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170BE2A9201A78FE0061DD80 /* GameViewController.swift */; };
 		170BE2AD201A78FE0061DD80 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 170BE2AB201A78FE0061DD80 /* Main.storyboard */; };
 		170BE2AF201A78FE0061DD80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 170BE2AE201A78FE0061DD80 /* Assets.xcassets */; };
 		170BE2B2201A78FE0061DD80 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 170BE2B0201A78FE0061DD80 /* LaunchScreen.storyboard */; };
@@ -60,12 +60,14 @@
 		174110F920227772002ABED3 /* B4.wav in Resources */ = {isa = PBXBuildFile; fileRef = 174110C920227772002ABED3 /* B4.wav */; };
 		174110FA20227772002ABED3 /* C1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 174110CA20227772002ABED3 /* C1.wav */; };
 		174110FB20227772002ABED3 /* D#2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 174110CB20227772002ABED3 /* D#2.wav */; };
+		174110FD2022867D002ABED3 /* Icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 174110FC2022867D002ABED3 /* Icon-60@2x.png */; };
 		1753B8BA202121AC004AA665 /* IntervalHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1753B8B9202121AC004AA665 /* IntervalHelpViewController.swift */; };
 		1753B8BE20213631004AA665 /* NSStopProgressFreestandingTemplate_2x_9923422d-02ea-4eb7-a567-6e9f7dbf9fd4.png in Resources */ = {isa = PBXBuildFile; fileRef = 1753B8BD20213631004AA665 /* NSStopProgressFreestandingTemplate_2x_9923422d-02ea-4eb7-a567-6e9f7dbf9fd4.png */; };
 		1753B8C220214B51004AA665 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1753B8C120214B51004AA665 /* Question.swift */; };
 		1753B8CA20218027004AA665 /* Echo_curation_alt_check_mark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1753B8C920218027004AA665 /* Echo_curation_alt_check_mark.png */; };
 		1753B9BC20225C16004AA665 /* PPlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1753B9BB20225C16004AA665 /* PPlogo.png */; };
 		1753B9C020225CE4004AA665 /* SessionSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1753B9BF20225CE4004AA665 /* SessionSelectionViewController.swift */; };
+		175E23BE2033A81F0039AE67 /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175E23BD2033A81F0039AE67 /* OptionsViewController.swift */; };
 		17683114202264070014ADF9 /* PPlogoMed.png in Resources */ = {isa = PBXBuildFile; fileRef = 17683113202264070014ADF9 /* PPlogoMed.png */; };
 		17683116202264380014ADF9 /* PPlogoSm.png in Resources */ = {isa = PBXBuildFile; fileRef = 17683115202264380014ADF9 /* PPlogoSm.png */; };
 		17807BC2201FC2AB004EE8A9 /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17807BC1201FC2AB004EE8A9 /* ResultsViewController.swift */; };
@@ -78,7 +80,7 @@
 /* Begin PBXFileReference section */
 		170BE2A4201A78FE0061DD80 /* PerfectPitch2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerfectPitch2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		170BE2A7201A78FE0061DD80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		170BE2A9201A78FE0061DD80 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		170BE2A9201A78FE0061DD80 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		170BE2AC201A78FE0061DD80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		170BE2AE201A78FE0061DD80 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		170BE2B1201A78FE0061DD80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -131,12 +133,14 @@
 		174110C920227772002ABED3 /* B4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = B4.wav; sourceTree = "<group>"; };
 		174110CA20227772002ABED3 /* C1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = C1.wav; sourceTree = "<group>"; };
 		174110CB20227772002ABED3 /* D#2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "D#2.wav"; sourceTree = "<group>"; };
+		174110FC2022867D002ABED3 /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@2x.png"; sourceTree = "<group>"; };
 		1753B8B9202121AC004AA665 /* IntervalHelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalHelpViewController.swift; sourceTree = "<group>"; };
 		1753B8BD20213631004AA665 /* NSStopProgressFreestandingTemplate_2x_9923422d-02ea-4eb7-a567-6e9f7dbf9fd4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NSStopProgressFreestandingTemplate_2x_9923422d-02ea-4eb7-a567-6e9f7dbf9fd4.png"; sourceTree = "<group>"; };
 		1753B8C120214B51004AA665 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		1753B8C920218027004AA665 /* Echo_curation_alt_check_mark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Echo_curation_alt_check_mark.png; sourceTree = "<group>"; };
 		1753B9BB20225C16004AA665 /* PPlogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PPlogo.png; sourceTree = "<group>"; };
 		1753B9BF20225CE4004AA665 /* SessionSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSelectionViewController.swift; sourceTree = "<group>"; };
+		175E23BD2033A81F0039AE67 /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
 		17683113202264070014ADF9 /* PPlogoMed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PPlogoMed.png; sourceTree = "<group>"; };
 		17683115202264380014ADF9 /* PPlogoSm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PPlogoSm.png; sourceTree = "<group>"; };
 		17807BC1201FC2AB004EE8A9 /* ResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
@@ -188,10 +192,11 @@
 			isa = PBXGroup;
 			children = (
 				170BE2A7201A78FE0061DD80 /* AppDelegate.swift */,
-				170BE2A9201A78FE0061DD80 /* ViewController.swift */,
+				170BE2A9201A78FE0061DD80 /* GameViewController.swift */,
 				17807BC1201FC2AB004EE8A9 /* ResultsViewController.swift */,
 				1753B8B9202121AC004AA665 /* IntervalHelpViewController.swift */,
 				1753B9BF20225CE4004AA665 /* SessionSelectionViewController.swift */,
+				175E23BD2033A81F0039AE67 /* OptionsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -201,6 +206,7 @@
 			children = (
 				170BE2AB201A78FE0061DD80 /* Main.storyboard */,
 				170BE2AE201A78FE0061DD80 /* Assets.xcassets */,
+				174110FC2022867D002ABED3 /* Icon-60@2x.png */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -363,6 +369,7 @@
 				174110CD20227772002ABED3 /* G1.wav in Resources */,
 				174110DB20227772002ABED3 /* G3.wav in Resources */,
 				174110CC20227772002ABED3 /* G#2.wav in Resources */,
+				174110FD2022867D002ABED3 /* Icon-60@2x.png in Resources */,
 				17683114202264070014ADF9 /* PPlogoMed.png in Resources */,
 				1753B8BE20213631004AA665 /* NSStopProgressFreestandingTemplate_2x_9923422d-02ea-4eb7-a567-6e9f7dbf9fd4.png in Resources */,
 				174110EE20227772002ABED3 /* F1.wav in Resources */,
@@ -413,10 +420,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1753B8BA202121AC004AA665 /* IntervalHelpViewController.swift in Sources */,
+				175E23BE2033A81F0039AE67 /* OptionsViewController.swift in Sources */,
 				17D379EE201BF41600A97A35 /* IntervalExample.swift in Sources */,
 				17D379D3201AAE4600A97A35 /* SessionBank.swift in Sources */,
 				1753B8C220214B51004AA665 /* Question.swift in Sources */,
-				170BE2AA201A78FE0061DD80 /* ViewController.swift in Sources */,
+				170BE2AA201A78FE0061DD80 /* GameViewController.swift in Sources */,
 				170BE2A8201A78FE0061DD80 /* AppDelegate.swift in Sources */,
 				1753B9C020225CE4004AA665 /* SessionSelectionViewController.swift in Sources */,
 				17D379D1201AAAEE00A97A35 /* Session.swift in Sources */,
@@ -559,6 +567,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FYZE6539TN;
 				INFOPLIST_FILE = "$(SRCROOT)/PerfectPitch2/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.melling.PerfectPitch2;
@@ -573,6 +582,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FYZE6539TN;
 				INFOPLIST_FILE = "$(SRCROOT)/PerfectPitch2/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.melling.PerfectPitch2;
